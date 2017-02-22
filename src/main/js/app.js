@@ -14,6 +14,11 @@ class App extends React.Component {
 	
 	
 	fetchTweets() {
+	}
+    
+    componentDidMount() {    
+        var that = this;
+          
 		fetch("/tweeter")
 		.then(function(response) {
 			  var text = '';
@@ -36,13 +41,10 @@ class App extends React.Component {
 				}
 			  }
 		}).then(function(tweets) {
-            //this.setState({tweets:JSON.parse(text)});
-            console.log("@fetchTweets() app.js line 40");
-            console.log(tweets);
-			return tweets;
+            that.setState({ tweets: tweets });
 		});
-	}
-
+    }
+    
 	render() {
 		return (
 			<div>
@@ -75,13 +77,15 @@ class TweetList extends React.Component {
 		return (
 			<div>
 				<table>
-					<tbody>
+					<thead>
 						<tr>
 							<th>To User</th>
 							<th>Text</th>
 						</tr>
+					</thead>
+                    <tbody>
 						{tweets}
-					</tbody>
+                    </tbody>
 				</table>
 			</div>
 		)
