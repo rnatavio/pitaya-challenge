@@ -8,7 +8,8 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {tweets: [], attributes: []}; 
-		this.fetchTweets = this.fetchTweets.bind(this.state);
+		this.fetchTweets = this.fetchTweets.bind(this);
+        this.fetchTweets();
 	}
 	
 	
