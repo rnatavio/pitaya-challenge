@@ -42,19 +42,17 @@ public class HomeController {
         this.connectionRepository = connectionRepository;
     }
 
-    @RequestMapping(method=RequestMethod.GET)
+    @RequestMapping(value="/showTweets", method=RequestMethod.GET)
     public String helloTwitter(Model model) {
-        if (connectionRepository.findPrimaryConnection(Twitter.class) == null) {
-            //return "redirect:/connect/twitter";
-        }
-
-        //model.addAttribute(twitter.userOperations().getUserProfile());
-        //CursoredList<TwitterProfile> friends = twitter.friendOperations().getFriends();
-        //model.addAttribute("friends", friends);
 		List<Tweet> tweets = twitter.timelineOperations().getUserTimeline("Optus");
 		model.addAttribute("tweets", tweets);
         return "tweets";
     }
+	
+	@RequestMapping(value = "/")
+	public String index() {
+        return "index";
+	}
 
 }
 // end::code[]
