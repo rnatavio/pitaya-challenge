@@ -30,19 +30,20 @@ class App extends React.Component {
 				var chunk = decoder.decode(result.value || new Uint8Array, {stream: !result.done});
 				text += chunk;
 				if (result.done) {
-					this.setState({tweets:JSON.parse(text)});
 				  return JSON.parse(text);
 				} else {
 				  return readChunk();
 				}
 			  }
 		}).then(function(tweets) {
+            //this.setState({tweets:JSON.parse(text)});
+            console.log("@fetchTweets() app.js line 40");
+            console.log(tweets);
 			return tweets;
 		});
 	}
 
 	render() {
-		//FIXME: this.state is undefined. need to pass the tweets array
 		return (
 			<div>
 				<TweetList tweets={this.state.tweets}/>
@@ -60,12 +61,16 @@ class TweetList extends React.Component {
 	}
 
 	render() {
-		console.log(this.props.tweets);
 		var tweets;
 		if (this.props.tweets) {
-			tweets = this.props.tweets(tweet =>
-				<Tweet tweet={tweet}/>
-			);
+            tweets = this.props.tweets.map(function(tweet) {
+                return (
+                    <tr>
+                        <td>{tweet.inReplyToScreenName}</td>
+                        <td>{tweet.text}</td>
+                    </tr>
+                )
+            });
 		}
 		return (
 			<div>
