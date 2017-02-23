@@ -11,7 +11,11 @@ class App extends React.Component {
     
 	render() {
 		return (
-			<TweeterFeeds/>
+            <div>
+                <div className="header"><img src="https://img.clipartfest.com/925898b903a4d9182622fda48f870f66_welcome-to-our-room-with-a-twitter-logo-clipart-png_1139-926.png" height="50"/>
+                </div>
+                <TweeterFeeds/>
+            </div>
 		)
 
 	}
@@ -70,7 +74,7 @@ class TweeterFeeds extends React.Component {
 	render() {
 		return (
 			<div>
-                <a href="#" onClick={this.fetchOptusTweets}>@Optus</a> | <a href="#" onClick={this.fetchSingtelTweets}>@Singtel</a>
+                <button type="button" onClick={this.fetchOptusTweets}>@Optus</button> | <button type="button" onClick={this.fetchSingtelTweets}>@Singtel</button>
                 <br/>
 				<TweetList tweets={this.state.tweets}/>
 			</div>
