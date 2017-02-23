@@ -7,19 +7,41 @@ class App extends React.Component {
 
 	constructor(props) {
 		super(props);
+	}
+    
+	render() {
+		return (
+			<TweeterFeeds/>
+		)
+
+	}
+}
+
+class TweeterFeeds extends React.Component {
+
+	constructor(props) {
+		super(props);
 		this.state = {tweets: [], attributes: []}; 
 		this.fetchTweets = this.fetchTweets.bind(this);
-        this.fetchTweets();
-	}
-	
-	
-	fetchTweets() {
+		this.fetchOptusTweets = this.fetchOptusTweets.bind(this);
+		this.fetchSingtelTweets = this.fetchSingtelTweets.bind(this);
 	}
     
     componentDidMount() {    
+        this.fetchTweets("Optus");
+    }
+    
+    fetchOptusTweets() {
+        this.fetchTweets('Optus');
+    }
+    fetchSingtelTweets() {
+        this.fetchTweets('Singtel');
+    }
+    
+    
+    fetchTweets(username) {
         var that = this;
-          
-		fetch("/tweeter")
+		fetch("/tweeter?user="+username)
 		.then(function(response) {
 			  var text = '';
 			  var reader = response.body.getReader()
@@ -48,6 +70,8 @@ class App extends React.Component {
 	render() {
 		return (
 			<div>
+                <a href="#" onClick={this.fetchOptusTweets}>@Optus</a> | <a href="#" onClick={this.fetchSingtelTweets}>@Singtel</a>
+                <br/>
 				<TweetList tweets={this.state.tweets}/>
 			</div>
 		)
@@ -68,7 +92,7 @@ class TweetList extends React.Component {
             tweets = this.props.tweets.map(function(tweet) {
                 return (
                     <tr>
-                        <td>{tweet.inReplyToScreenName}</td>
+                        <td><img src={tweet.profileImageUrl}/></td>
                         <td>{tweet.text}</td>
                     </tr>
                 )
@@ -79,7 +103,7 @@ class TweetList extends React.Component {
 				<table>
 					<thead>
 						<tr>
-							<th>To User</th>
+							<th></th>
 							<th>Text</th>
 						</tr>
 					</thead>
